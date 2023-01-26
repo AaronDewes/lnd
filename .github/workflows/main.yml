@@ -26,7 +26,7 @@ env:
   # /dev.Dockerfile
   # /make/builder.Dockerfile
   # /.github/workflows/release.yml
-  GO_VERSION: 1.19.2
+  GO_VERSION: 1.20.0
 
 jobs:
   ########################
@@ -223,7 +223,16 @@ jobs:
         run: ./scripts/install_bitcoind.sh
 
       - name: run ${{ matrix.name }}
-        run: make itest-parallel ${{ matrix.args }}
+        run: make itest-parallel ${{ matrix.args }} cover=true
+
+      - name: convert coverage data
+        run: go tool covdata textfmt -i=lntest/itest/cover -o lntest/itest/coverage.txt
+
+      - name: Send coverage
+        uses: shogo82148/actions-goveralls@v1
+        with:
+          path-to-profile: lntest/itest/coverage.txt
+          parallel: true
 
       - name: Zip log files on failure
         if: ${{ failure() }}

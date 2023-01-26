@@ -38,6 +38,7 @@ lntest/itest/.minerlogs
 lntest/itest/lnd-itest
 lntest/itest/btcd-itest
 lntest/itest/.logs-*
+lntest/itest/cover
 
 cmd/cmd
 *.key
@@ -68,6 +69,7 @@ profile.tmp
 
 # Coverage test
 coverage.txt
+lntest/itest/coverage.txt
 
 # Visual Studio cache/options directory
 .vs/
