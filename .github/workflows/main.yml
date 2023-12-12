@@ -21,7 +21,7 @@ defaults:
     shell: bash
 
 env:
-  BITCOIN_VERSION: "23.0"
+  BITCOIN_VERSION: "26"
 
   # If you change this value, please change it in the following files as well:
   # /.travis.yml
@@ -213,7 +213,7 @@ jobs:
           go-version: '${{ env.GO_VERSION }}'
 
       - name: install bitcoind
-        run: ./scripts/install_bitcoind.sh
+        run: ./scripts/install_bitcoind.sh $BITCOIN_VERSION
 
       - name: run ${{ matrix.unit_type }}
         run: make log="stdlog debug" ${{ matrix.unit_type }}
@@ -264,7 +264,7 @@ jobs:
           go-version: '${{ env.GO_VERSION }}'
 
       - name: install bitcoind
-        run: ./scripts/install_bitcoind.sh
+        run: ./scripts/install_bitcoind.sh $BITCOIN_VERSION
 
       - name: run ${{ matrix.name }}
         run: make itest-parallel ${{ matrix.args }}
