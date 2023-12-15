@@ -165,8 +165,8 @@ func CreateSpendTx(t *testing.T, prevOutPoint *wire.OutPoint,
 
 // NewMiner spawns testing harness backed by a btcd node that can serve as a
 // miner.
-func NewMiner(t *testing.T, extraArgs []string, createChain bool,
-	spendableOutputs uint32) *rpctest.Harness {
+func NewMiner(t *testing.T, netParams *chaincfg.Params, extraArgs []string,
+	createChain bool, spendableOutputs uint32) *rpctest.Harness {
 
 	t.Helper()
 
@@ -174,7 +174,7 @@ func NewMiner(t *testing.T, extraArgs []string, createChain bool,
 	trickle := fmt.Sprintf("--trickleinterval=%v", TrickleInterval)
 	extraArgs = append(extraArgs, trickle)
 
-	node, err := rpctest.New(NetParams, nil, extraArgs, "")
+	node, err := rpctest.New(netParams, nil, extraArgs, "")
 	require.NoError(t, err, "unable to create backend node")
 	t.Cleanup(func() {
 		require.NoError(t, node.TearDown())
